@@ -24,7 +24,11 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
-            <body className="min-h-full flex flex-col">{children}</body>
+            <body className="min-h-full flex flex-col">
+                {/* TODO: Envolver con AuthProvider aqui */}
+                {/* TODO: Incluir Navbar aqui */}
+                <main className="min-h-screen bg-base-200">{children}</main>
+            </body>
         </html>
     );
 }
