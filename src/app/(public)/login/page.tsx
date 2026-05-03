@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { loginUser } from './services/login.service';
+import { loginUser, getUserByEmail } from './services/login.service';
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
@@ -22,16 +23,16 @@ export default function LoginPage() {
     }
     setError('');
     setLoading(true);
-    try {
-        const { access_token } = await loginUser({ email, password });
-        login(access_token, email);
-        router.push('/feed');
-    } catch {
-        setError('Email o contraseña incorrectos.');
-    } finally {
-        setLoading(false);
-    }
-};
+   try {
+    const { access_token } = await loginUser({ email, password });
+    // Guardar token temporal para poder hacer el segundo request
+    localStorage.setItem('token', access_token);
+    const user = await getUserByEmail(email);
+    login(access_token, user);
+    router.push('/feed');
+} catch {
+    setError('Email o contraseña incorrectos.');
+}
     return (
         <div className="min-h-screen bg-black relative flex items-center justify-center p-6 overflow-hidden">
             {/* Fondo Horizon */}
