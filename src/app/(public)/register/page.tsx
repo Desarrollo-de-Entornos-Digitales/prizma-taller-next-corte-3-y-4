@@ -12,6 +12,28 @@ export default function RegisterPage() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
+    const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name || !email || !password) {
+        setError('Por favor completa todos los campos.');
+        return;
+    }
+    if (password.length < 8) {
+        setError('La contraseña debe tener al menos 8 caracteres.');
+        return;
+    }
+    setError('');
+    setLoading(true);
+    try {
+        await registerUser({ name, email, password });
+        router.push('/login');
+    } catch {
+        setError('Error al crear la cuenta. El email puede estar en uso.');
+    } finally {
+        setLoading(false);
+    }
+};
+
     return (
         <div className="min-h-screen bg-black relative flex items-center justify-center p-6 overflow-hidden">
             {/* Fondo Horizon */}
@@ -28,7 +50,7 @@ export default function RegisterPage() {
                     </p>
                 </div>
 
-                <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+                <form className="space-y-4" onSubmit={handleSubmit}>
     <div className="space-y-2">
         <label className="text-[10px] font-bold text-[#A1A1A1] uppercase tracking-widest">
             Nombre Completo
