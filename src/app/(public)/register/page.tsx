@@ -28,9 +28,66 @@ export default function RegisterPage() {
                     </p>
                 </div>
 
-                {/* Placeholder campos */}
-                <p className="text-[#A1A1A1] text-center text-sm">Campos pendientes</p>
-            </div>
-        </div>
-    );
-}
+                <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+    <div className="space-y-2">
+        <label className="text-[10px] font-bold text-[#A1A1A1] uppercase tracking-widest">
+            Nombre Completo
+        </label>
+        <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Nexus Commander"
+            className="w-full bg-black border border-[#2C2C2C] rounded-[6px] px-4 py-3 text-sm text-white placeholder:text-[#A1A1A1] focus:border-white/40 focus:outline-none transition-colors"
+        />
+    </div>
+    <div className="space-y-2">
+        <label className="text-[10px] font-bold text-[#A1A1A1] uppercase tracking-widest">
+            Email
+        </label>
+        <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="email@prizma.gg"
+            className="w-full bg-black border border-[#2C2C2C] rounded-[6px] px-4 py-3 text-sm text-white placeholder:text-[#A1A1A1] focus:border-white/40 focus:outline-none transition-colors"
+        />
+    </div>
+    <div className="space-y-2">
+        <label className="text-[10px] font-bold text-[#A1A1A1] uppercase tracking-widest">
+            Contraseña
+        </label>
+        <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="••••••••"
+            className="w-full bg-black border border-[#2C2C2C] rounded-[6px] px-4 py-3 text-sm text-white placeholder:text-[#A1A1A1] focus:border-white/40 focus:outline-none transition-colors"
+        />
+    </div>
+
+    {error && (
+        <p className="text-red-400 text-[11px] text-center uppercase tracking-widest">
+            {error}
+        </p>
+    )}
+
+    <button
+        type="submit"
+        disabled={loading}
+        className="w-full bg-white text-black font-bold py-3.5 rounded-[6px] text-[11px] uppercase tracking-widest mt-6 hover:bg-white/90 disabled:opacity-50 transition-all"
+    >
+        {loading ? 'Creando cuenta...' : 'Registrarse'}
+    </button>
+
+    <div className="border-t border-[#2C2C2C] my-2" />
+
+    <p className="text-center">
+        <Link
+            href="/login"
+            className="text-[10px] font-bold text-[#A1A1A1] uppercase tracking-widest hover:text-white transition-colors"
+        >
+            Volver al Log-In
+        </Link>
+    </p>
+</form>
