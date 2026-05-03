@@ -31,11 +31,50 @@ export default function LoginPage() {
                     </p>
                 </div>
 
-                {/* Placeholder del form — se completa en el siguiente commit */}
-                <div className="space-y-6">
-                    <p className="text-[#A1A1A1] text-center text-sm">Form pendiente</p>
+                <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+    {/* Campo Email */}
+    <div className="space-y-2">
+        <label className="text-[10px] font-bold text-[#A1A1A1] uppercase tracking-widest">
+            Email
+        </label>
+        <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="email@prizma.gg"
+            className="w-full bg-black border border-[#2C2C2C] rounded-[6px] px-4 py-3 text-sm text-white placeholder:text-[#A1A1A1] focus:border-white/40 focus:outline-none transition-colors"
+        />
+    </div>
+
+    {/* Campo Password */}
+    <div className="space-y-2">
+        <label className="text-[10px] font-bold text-[#A1A1A1] uppercase tracking-widest">
+            Contraseña
+        </label>
+        <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="••••••••"
+            className="w-full bg-black border border-[#2C2C2C] rounded-[6px] px-4 py-3 text-sm text-white placeholder:text-[#A1A1A1] focus:border-white/40 focus:outline-none transition-colors"
+        />
+    </div>
+
+    {/* Placeholder botón */}
+    <p className="text-[#A1A1A1] text-center text-xs">Botón pendiente</p>
+</form>
+
+                {/* Footer */}
+                <div className="mt-8 text-center">
+                    <p className="text-[#A1A1A1] text-[10px] uppercase font-bold tracking-widest">
+                        ¿No tienes una cuenta?{' '}
+                        <Link href="/register" className="text-[#3373FF] hover:underline">
+
+                            Regístrate
+                        </Link>
+                    </p>    
                 </div>
             </div>
         </div>
     );
-}
+}   
