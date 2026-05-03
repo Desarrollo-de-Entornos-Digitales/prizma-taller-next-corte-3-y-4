@@ -52,6 +52,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setUser(null);
     };
 
+    const login = (newToken: string, newUser: User): void => {
+       localStorage.setItem('token', newToken);
+       localStorage.setItem('user', JSON.stringify(newUser));
+       setToken(newToken);
+       setUser(newUser);
+   };
+   
     return (
         <AuthContext.Provider value={{ token, user, isAuthenticated: !!token, isLoading, login, logout }}>
             {children}
