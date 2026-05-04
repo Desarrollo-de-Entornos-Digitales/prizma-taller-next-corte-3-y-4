@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+
 import { AuthProvider } from '@/context/AuthContext';
 import Navbar from '@/common/components/Navbar';
 import './globals.css';
@@ -14,9 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <body className="min-h-screen bg-base-100">
                 <AuthProvider>
                     <Navbar />
-                    <main className="max-w-7xl mx-auto px-4 py-6">
-                        {children}
-                    </main>
+                    <main className="pt-16 min-h-screen bg-base-100">{children}</main>
                 </AuthProvider>
             </body>
         </html>
