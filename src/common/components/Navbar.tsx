@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 
 export default function Navbar() {
-    const { isAuthenticated, user } = useAuth();
+    const { isAuthenticated, user, logout } = useAuth();
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const router = useRouter();
 
