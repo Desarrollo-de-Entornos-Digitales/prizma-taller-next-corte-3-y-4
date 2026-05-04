@@ -78,11 +78,15 @@ export default function FeedPage() {
                         <div className="flex gap-8 mb-8">
                             <div>
                                 <p className="text-[#A1A1A1] text-[10px] uppercase tracking-widest">Género</p>
-                                <p className="text-white font-bold uppercase text-sm tracking-tight">{games[0].genre}</p>
+                                <p className="text-white font-bold uppercase text-sm tracking-tight">
+                                    {games[0].genre}
+                                </p>
                             </div>
                             <div>
                                 <p className="text-[#A1A1A1] text-[10px] uppercase tracking-widest">Plataforma</p>
-                                <p className="text-white font-bold uppercase text-sm tracking-tight">{games[0].origin_platform}</p>
+                                <p className="text-white font-bold uppercase text-sm tracking-tight">
+                                    {games[0].origin_platform}
+                                </p>
                             </div>
                         </div>
                         <button
@@ -105,11 +109,7 @@ export default function FeedPage() {
 
             {/* Carousels */}
             <div className="px-8 md:px-24 py-20 space-y-24 max-w-screen-2xl mx-auto">
-                <CarouselSection
-                    title="Todos"
-                    games={games}
-                    onGameClick={(id) => router.push(`/games/${id}`)}
-                />
+                <CarouselSection title="Todos" games={games} onGameClick={(id) => router.push(`/games/${id}`)} />
                 <CarouselSection
                     title="PC"
                     games={filterByPlatform(games, 'PC')}
