@@ -1,8 +1,8 @@
-// src/common/components/Navbar.tsx
 'use client';
 
 import Link from 'next/link';
 
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import { useAuth } from '@/context/AuthContext';
@@ -10,6 +10,7 @@ import { useAuth } from '@/context/AuthContext';
 export default function Navbar() {
     const { isAuthenticated, user } = useAuth();
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const router = useRouter();
 
     return (
         <header className="fixed top-0 left-0 right-0 z-50 h-16 bg-black/95 backdrop-blur-md border-b border-[#2C2C2C]">
@@ -120,7 +121,6 @@ export default function Navbar() {
                                 />
                             </svg>
                         </button>
-
                         {/* Info usuario */}
                         <div className="flex flex-col gap-2">
                             <div className="w-12 h-12 rounded-full bg-[#335bff] flex items-center justify-center text-white text-lg font-bold uppercase">
@@ -134,10 +134,8 @@ export default function Navbar() {
                                 {user?.total_points || 0} XP
                             </p>
                         </div>
-
                         {/* Divider */}
                         <div className="border-t border-[#2C2C2C]" />
-
                         {/* Mini biblioteca placeholder */}
                         <div className="flex flex-col gap-3">
                             <p className="text-[10px] font-bold uppercase tracking-widest text-[#A1A1A1]">
@@ -145,12 +143,19 @@ export default function Navbar() {
                             </p>
                             <p className="text-[#A1A1A1] text-xs">Sin juegos aún</p>
                         </div>
-
                         {/* Spacer */}
                         <div className="flex-1" />
-
                         {/* Logout */}
-                        <LogoutButton onClose={() => setSidebarOpen(false)} />
+                        <button
+                            onClick={() => {
+                                logout();
+                                setSidebarOpen(false);
+                                router.push('/login');
+                            }}
+                            className="w-full border border-[#2C2C2C] text-[#A1A1A1] text-[10px] font-bold uppercase tracking-widest py-3 rounded-[6px] hover:border-red-500/50 hover:text-red-400 transition-all"
+                        >
+                            Cerrar Sesión
+                        </button>
                     </div>
                 </>
             )}
