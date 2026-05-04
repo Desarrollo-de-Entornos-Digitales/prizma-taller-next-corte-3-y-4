@@ -11,8 +11,29 @@ export default function Navbar() {
                     Prizma
                 </Link>
 
-                {/* Placeholder nav links */}
-                <p className="text-[#A1A1A1] text-[10px]">Links pendientes</p>
+                {/* Nav Links — solo si está autenticado */}
+                {isAuthenticated && (
+                    <nav className="hidden md:flex items-center gap-8">
+                        <Link
+                            href="/feed"
+                            className="text-[10px] font-bold uppercase tracking-widest text-[#A1A1A1] hover:text-white transition-colors border-b border-transparent hover:border-[#335bff] pb-0.5"
+                        >
+                            Feed
+                        </Link>
+                        <Link
+                            href="/feed"
+                            className="text-[10px] font-bold uppercase tracking-widest text-[#A1A1A1] hover:text-white transition-colors"
+                        >
+                            Biblioteca
+                        </Link>
+                        <Link
+                            href="/feed"
+                            className="text-[10px] font-bold uppercase tracking-widest text-[#A1A1A1] hover:text-white transition-colors"
+                        >
+                            Torneos
+                        </Link>
+                    </nav>
+                )}
 
                 {/* Placeholder derecha */}
                 <p className="text-[#A1A1A1] text-[10px]">Avatar pendiente</p>
