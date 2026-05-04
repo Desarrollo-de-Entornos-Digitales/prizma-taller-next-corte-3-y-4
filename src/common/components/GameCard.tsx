@@ -21,11 +21,18 @@ export default function GameCard({ game, onClick }: GameCardProps) {
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                 ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                        <span className="text-[#A1A1A1] text-[10px] uppercase tracking-widest">Sin imagen</span>
+                    <div className="w-full h-full flex flex-col items-end justify-start p-4 bg-gradient-to-br from-[#0A0A0A] to-[#121212]">
+                        <div className="flex flex-col items-end gap-1">
+                            <p className="text-[#335bff] text-[10px] font-bold uppercase tracking-[0.3em]">
+                                Prizma System
+                            </p>
+                            <p className="text-[#A1A1A1] text-xs font-bold uppercase tracking-tighter text-right">
+                                {game.title}
+                            </p>
+                        </div>
                     </div>
                 )}
- 
+
                 <div className="absolute inset-0 bg-gradient-to-t from-[#121212] via-transparent to-transparent" />
             </div>
 
