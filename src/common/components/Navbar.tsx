@@ -1,11 +1,10 @@
 'use client';
 
 import Link from 'next/link';
-
 import { useAuth } from '@/context/AuthContext';
 
 export default function Navbar() {
-    const { isAuthenticated } = (useAuth as () => { isAuthenticated: boolean })();
+    const { isAuthenticated, user } = useAuth();
 
     return (
         <header className="fixed top-0 left-0 right-0 z-50 h-16 bg-black/95 backdrop-blur-md border-b border-[#2C2C2C]">
