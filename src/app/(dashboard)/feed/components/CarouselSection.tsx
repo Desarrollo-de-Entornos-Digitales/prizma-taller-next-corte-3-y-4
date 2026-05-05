@@ -24,9 +24,7 @@ export default function CarouselSection({ title, games, onGameClick }: CarouselS
             {/* Header de sección */}
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                    <h3 className="text-[12px] font-bold uppercase tracking-[0.3em] text-white">
-                        {title}
-                    </h3>
+                    <h3 className="text-[12px] font-bold uppercase tracking-[0.3em] text-white">{title}</h3>
                     {/* Indicadores de página */}
                     <div className="flex gap-1">
                         {Array.from({ length: totalPages }).map((_, i) => (
@@ -70,14 +68,12 @@ export default function CarouselSection({ title, games, onGameClick }: CarouselS
                         {/* Imagen */}
                         <div className="h-40 w-full overflow-hidden bg-[#0A0A0A]">
                             {game.cover_url ? (
-                                <img
-                                    src={game.cover_url}
-                                    alt={game.title}
-                                    className="w-full h-full object-cover"
-                                />
+                                <img src={game.cover_url} alt={game.title} className="w-full h-full object-cover" />
                             ) : (
                                 <div className="w-full h-full flex items-center justify-center">
-                                    <span className="text-[#A1A1A1] text-[10px] uppercase tracking-widest">Sin imagen</span>
+                                    <span className="text-[#A1A1A1] text-[10px] uppercase tracking-widest">
+                                        Sin imagen
+                                    </span>
                                 </div>
                             )}
                         </div>
@@ -90,9 +86,7 @@ export default function CarouselSection({ title, games, onGameClick }: CarouselS
                             <p className="text-white font-bold uppercase tracking-tighter leading-none text-sm">
                                 {game.title}
                             </p>
-                            <p className="text-[#A1A1A1] text-[10px] uppercase tracking-widest">
-                                Género: {game.genre}
-                            </p>
+                            <p className="text-[#A1A1A1] text-[10px] uppercase tracking-widest">Género: {game.genre}</p>
                         </div>
                     </div>
                 ))}
