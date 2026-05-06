@@ -1,8 +1,15 @@
 import type { Metadata } from 'next';
-
+import { Poppins } from 'next/font/google';
 import { AuthProvider } from '@/context/AuthContext';
 import Navbar from '@/common/components/Navbar';
 import './globals.css';
+
+const poppins = Poppins({
+    subsets: ['latin'],
+    weight: ['400', '500', '600', '700', '800', '900'],
+    variable: '--font-poppins',
+    display: 'swap',
+});
 
 export const metadata: Metadata = {
     title: 'Prizma Gaming Platform',
@@ -11,11 +18,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
-        <html lang="es">
-            <body className="min-h-screen bg-base-100">
+        <html lang="es" className={poppins.variable}>
+            <body className="pt-16 min-h-screen bg-black" style={{ fontFamily: 'var(--font-poppins), sans-serif' }}>
                 <AuthProvider>
                     <Navbar />
-                    <main className="pt-16 min-h-screen bg-black">{children}</main>
+                    <main>
+                        {children}
+                    </main>
                 </AuthProvider>
             </body>
         </html>
