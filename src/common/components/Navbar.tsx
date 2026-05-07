@@ -102,12 +102,12 @@ export default function Navbar() {
                 <>
                     {/* Overlay con blur */}
                     <div
-                        className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
+                        className="fixed inset-0 z-40 bg-black/80 backdrop-blur-sm"
                         onClick={() => setSidebarOpen(false)}
                     />
 
                     {/* Panel lateral */}
-                    <div className="fixed top-0 right-0 h-full w-80 z-50 bg-[#0A0A0A] border-l border-[#2C2C2C] flex flex-col">
+                    <div className="fixed top-0 right-0 h-full w-80 z-50 bg-[#0A0A0A]/95 border-l border-[#2C2C2C] p-12 flex flex-col gap-8">
 
                         {/* Header del panel */}
                         <div className="flex items-center justify-between px-6 h-16 border-b border-[#2C2C2C] shrink-0">
