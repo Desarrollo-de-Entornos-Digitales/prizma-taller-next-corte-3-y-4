@@ -21,6 +21,10 @@ export default function FeedPage() {
     const pcGames = filterByPlatform(games, 'PC') as Game[];
     const mobileGames = filterByPlatform(games, 'Mobile') as Game[];
 
+    const getGameId = (game: Game): number => {
+        return (game.id_game ?? (game as unknown as { id: number }).id) as number;
+    };
+
     useEffect(() => {
         if (!authLoading && !isAuthenticated) {
             router.push('/login');

@@ -28,13 +28,11 @@ export default function Input({
     className = '',
 }: InputProps) {
     return (
-        <div className="form-control w-full">
+        <div className="flex flex-col gap-2 w-full">
             {label && (
-                <label className="label">
-                    <span className="label-text font-medium">
-                        {label}
-                        {required && <span className="text-error ml-1">*</span>}
-                    </span>
+                <label className="text-[10px] font-bold text-[#A1A1A1] uppercase tracking-widest">
+                    {label}
+                    {required && <span className="text-red-400 ml-1">*</span>}
                 </label>
             )}
 
@@ -45,13 +43,11 @@ export default function Input({
                 value={value}
                 onChange={onChange}
                 disabled={disabled}
-                className={`input input-bordered w-full ${error ? 'input-error' : ''} ${className}`.trim()}
+                className={`w-full bg-black border ${error ? 'border-red-500' : 'border-[#2C2C2C]'} rounded-[6px] px-4 py-3 text-sm text-white placeholder:text-[#A1A1A1] focus:border-white/40 focus:outline-none transition-colors disabled:opacity-50 ${className}`.trim()}
             />
 
             {error && (
-                <label className="label">
-                    <span className="label-text-alt text-error">{error}</span>
-                </label>
+                <p className="text-red-400 text-[11px] uppercase tracking-widest">{error}</p>
             )}
         </div>
     );

@@ -26,16 +26,16 @@ export default function Button({
     className = '',
 }: ButtonProps) {
     const variantClass = {
-        primary: 'btn-primary',
-        secondary: 'btn-secondary',
-        danger: 'btn-error',
-        ghost: 'btn-ghost',
+        primary: 'bg-white text-black hover:bg-white/90',
+        secondary: 'border border-[#2C2C2C] text-white hover:border-[#335bff]',
+        danger: 'border border-red-500/50 text-red-400 hover:bg-red-500/10',
+        ghost: 'text-[#A1A1A1] hover:text-white',
     }[variant];
 
     const sizeClass = {
-        sm: 'btn-sm',
-        md: '',
-        lg: 'btn-lg',
+        sm: 'px-4 py-2 text-[10px]',
+        md: 'px-6 py-3 text-[11px]',
+        lg: 'px-10 py-3.5 text-[11px]',
     }[size];
 
     return (
@@ -43,9 +43,9 @@ export default function Button({
             type={type}
             onClick={onClick}
             disabled={disabled || loading}
-            className={`btn ${variantClass} ${sizeClass} ${fullWidth ? 'w-full' : ''} ${className}`.trim()}
+            className={`font-bold uppercase tracking-widest rounded-[6px] transition-all disabled:opacity-50 ${variantClass} ${sizeClass} ${fullWidth ? 'w-full' : ''} ${className}`.trim()}
         >
-            {loading ? <span className="loading loading-spinner loading-sm"></span> : children}
+            {loading ? 'Cargando...' : children}
         </button>
     );
 }

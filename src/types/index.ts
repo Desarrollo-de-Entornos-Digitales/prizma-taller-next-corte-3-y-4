@@ -29,13 +29,15 @@ export type User = {
 // ─── Games ────────────────────────────────────────────────────────────────────
 
 export type Game = {
-    id_game: number;
+    id?: number;
+    id_game?: number;
     title: string;
     genre: string;
     origin_platform: string;
     created_at: string;
-    cover_url?: string;
-    banner_url?: string;
+    banner_url?: string | null;
+    cover_url?: string | null;
+    thumbnail_url?: string | null;
 };
 
 export type CreateGameDto = {

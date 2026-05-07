@@ -61,8 +61,8 @@ export default function CarouselSection({ title, games, onGameClick }: CarouselS
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {visible.map((game) => (
                     <div
-                        key={game.id_game}
-                        onClick={() => onGameClick(game.id_game)}
+                        key={`game-card-${game.id_game}`}
+                        onClick={() => onGameClick(game.id_game!)}
                         className="cursor-pointer border border-[#2C2C2C] rounded-[6px] bg-[#121212] hover:border-[#335bff] hover:scale-[1.02] transition-all duration-300 overflow-hidden"
                     >
                         {/* Imagen */}
