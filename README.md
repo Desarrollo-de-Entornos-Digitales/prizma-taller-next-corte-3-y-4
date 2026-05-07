@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Prizma Gaming Platform — Frontend
 
-## Getting Started
+Plataforma de gaming desarrollada con Next.js para el Taller Grupal Corte 3.
+Materia: Computación en Internet III — ICESI 2026.
 
-First, run the development server:
+## Stack
+
+- Next.js 15 (App Router)
+- TypeScript
+- Tailwind CSS v4
+- Axios
+
+## Requisitos
+
+- Node.js 18+
+- npm
+
+## Instalación y ejecución local
+
+```bash
+npm install
+```
+
+Crea un archivo `.env.local` en la raíz con:
+NEXT_PUBLIC_API_URL=https://tu-backend.up.railway.app
+
+Luego:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+La app estará disponible en `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Funcionalidades implementadas
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Autenticación completa:** registro, login y logout con JWT
+- **Feed de juegos:** banner trending y carousels por categoría (Todos, PC, Mobile)
+- **Protección de rutas:** redirección automática según estado de sesión
+- **Navbar sticky:** con sidebar modal de perfil en desktop
+- **10+ componentes reutilizables:** Button, Input, Navbar, GameCard, Modal, Pagination, StarRating, LoadingSpinner, EmptyState, UserAvatar
 
-## Learn More
+## Autenticación y manejo de estado
 
-To learn more about Next.js, take a look at the following resources:
+El flujo de autenticación funciona así:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. El usuario hace login con email y password
+2. El backend retorna un `access_token` JWT
+3. El token se almacena en `localStorage` bajo la clave `token`
+4. El objeto `User` completo se obtiene con `GET /users/email/:email` y se guarda en `localStorage` bajo la clave `user`
+5. El `AuthContext` lee ambos valores al iniciar y expone `isAuthenticated`, `user`, `login()` y `logout()`
+6. El cliente axios inyecta el token automáticamente en cada request mediante un interceptor
+7. Si el backend responde 401, el interceptor limpia el localStorage y redirige al login
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Despliegue
 
-## Deploy on Vercel
+Frontend desplegado en Vercel.
+Backend desplegado en Railway.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Equipo
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [Nombre 1] — Auth pages, servicios
+- [Nombre 2] — Navbar
+- [Nombre 3] — Feed, carousels
+- [Nombre 4] — GameCard, layout, componentes base
