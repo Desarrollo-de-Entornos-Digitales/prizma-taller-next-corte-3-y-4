@@ -3,6 +3,8 @@
 Plataforma de gaming desarrollada con Next.js para el Taller Grupal Corte 3.
 Materia: Computación en Internet III — ICESI 2026.
 
+Figma Mocks: https://www.figma.com/design/yop4ZXN2z0rL0NCPApB2ia/Prizma-Front?node-id=0-1&t=kqrNMAx3orQkLgdI-1
+
 ## Stack
 
 - Next.js 15 (App Router)
