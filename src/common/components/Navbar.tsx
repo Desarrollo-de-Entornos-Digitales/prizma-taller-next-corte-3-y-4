@@ -49,13 +49,13 @@ export default function Navbar() {
                 <div className="flex items-center gap-4">
                     {isAuthenticated ? (
                         <>
-                            {/* Barra de búsqueda */}
+                            href="/library"
                             <div className="hidden md:flex items-center gap-2 bg-transparent border border-[#2C2C2C] rounded-[6px] px-3 py-1.5">
                                 <svg
                                     className="w-3.5 h-3.5 text-[#A1A1A1]"
                                     fill="none"
                                     stroke="currentColor"
-                                    viewBox="0 0 24 24"
+                            href="/tournaments"
                                 >
                                     <path
                                         strokeLinecap="round"
