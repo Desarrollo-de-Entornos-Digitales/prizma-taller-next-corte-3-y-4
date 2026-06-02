@@ -90,3 +90,99 @@ export type ApiError = {
     statusCode: number;
     error?: string;
 };
+
+// ─── Tournaments ───────────────────────────────────────────────────────────────
+
+export type Tournament = {
+    id_tournament: string;
+    name: string;
+    points_cost: number;
+    max_slots: number;
+    status: 'open' | 'closed' | 'in_progress';
+    rules: string;
+    start_date: string;
+    banner_url?: string;
+    creator_id: string;
+};
+
+export type Registration = {
+    id_registration: string;
+    registration_date: string;
+    final_position: number | null;
+    payment_status: string;
+    user_id: string;
+    tournament_id: string;
+};
+
+export type Announcement = {
+    id_announcement: string;
+    title: string;
+    message: string;
+    posted_at: string;
+    tournament_id: string;
+};
+
+export type TournamentPrize = {
+    id_prize: string;
+    description: string;
+    redemption_code: string;
+    delivery_status: string;
+    tournament_id: string;
+    winner_id: string;
+};
+
+// ─── Library ──────────────────────────────────────────────────────────────────
+
+export type UserLibrary = {
+    id_library: string;
+    play_time_minutes: number;
+    generated_points: number;
+    last_sync: string;
+    user_id: string;
+    game_id: number;
+    game?: Game;
+};
+
+export type CreateUserLibraryDto = {
+    game_id: number;
+    user_id: string;
+};
+
+// ─── Notifications ────────────────────────────────────────────────────────────
+
+export type Notification = {
+    id_notification: string;
+    title: string;
+    message: string;
+    type: string;
+    read: boolean;
+    user_id: string;
+};
+
+// ─── External Accounts ────────────────────────────────────────────────────────
+
+export type ExternalAccount = {
+    id_external_account: string;
+    external_user_id: string;
+    connection_status: string;
+    platform_id: string;
+    user_id: string;
+    platform?: Platform;
+};
+
+export type Platform = {
+    id_platform: string;
+    name: string;
+    description: string;
+};
+
+// ─── Points History ───────────────────────────────────────────────────────────
+
+export type PointsHistory = {
+    id_movement: string;
+    amount: number;
+    type: string;
+    reason: string;
+    user_id: string;
+    created_at?: string;
+};
