@@ -5,10 +5,9 @@ import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { AlertCircle, Loader2 } from 'lucide-react';
 
-import { createTournament } from '../services/tournaments.service';
+import { createTournament } from '../services/tournament.service';
 
 import { useAuth } from '@/context/AuthContext';
-
 
 type FormData = {
     name: string;

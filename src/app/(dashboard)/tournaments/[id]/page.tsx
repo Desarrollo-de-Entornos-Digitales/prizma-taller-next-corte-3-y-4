@@ -4,14 +4,16 @@ import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Check, Bell, Shield, Ghost } from 'lucide-react';
-import type { Tournament, Announcement, Registration } from '@/types';
-import { useAuth } from '@/context/AuthContext';
+
 import {
     getTournamentById,
     getAnnouncements,
     getRegistrations,
     createRegistration,
-} from '../services/tournaments.service';
+} from '../services/tournament.service';
+
+import type { Tournament, Announcement, Registration } from '@/types';
+import { useAuth } from '@/context/AuthContext';
 
 const statusStyles: Record<string, string> = {
     open: 'bg-emerald-500/15 border border-emerald-500/35 text-emerald-400',
@@ -40,11 +42,7 @@ export default function TournamentDetailPage() {
                 setTournament(t);
                 setAnnouncements(allAnnouncements.filter((a) => a.tournament_id === id));
                 if (user) {
-                    setIsRegistered(
-                        (allRegistrations as Registration[]).some(
-                            (r) => r.tournament_id === id && r.user_id === user.id_user,
-                        ),
-                    );
+                    setIsRegistered(allRegistrations.some((r) => r.tournament_id === id && r.user_id === user.id_user));
                 }
             } catch {
                 // silencioso

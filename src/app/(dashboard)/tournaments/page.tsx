@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Plus } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-import { getTournaments } from './services/tournaments.service';
+import { getTournament } from './services/tournament.service';
 
 import type { Tournament } from '@/types';
 import { useAuth } from '@/context/AuthContext';
@@ -27,8 +27,11 @@ export default function TournamentsPage() {
     useEffect(() => {
         const fetch = async () => {
             try {
-                const data = await getTournaments();
-                setTournaments(data);
+                const fetchTournament = getTournament as () => Promise<Tournament[]>;
+                const data = await fetchTournament();
+                if (Array.isArray(data)) {
+                    setTournaments(data);
+                }
             } catch {
                 // silencioso
             } finally {

@@ -34,11 +34,7 @@ export const getRegistrations = async (): Promise<Registration[]> => {
     return data;
 };
 
-export const createRegistration = async (dto: {
-    user_id: string;
-    tournament_id: string;
-}): Promise<Registration> => {
+export const createRegistration = async (dto: { user_id: string; tournament_id: string }): Promise<Registration> => {
     const { data } = await apiClient.post<Registration>('/registrations', dto);
     return data;
 };
-
