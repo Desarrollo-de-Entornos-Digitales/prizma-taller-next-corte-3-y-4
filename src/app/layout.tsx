@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 import { AuthProvider } from '@/context/AuthContext';
 import { LibraryProvider } from '@/context/LibraryContext';
+import { NotificationProvider } from '@/context/NotificationContext';
 import Navbar from '@/common/components/Navbar';
 import './globals.css';
 
@@ -23,10 +24,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <body className="pt-16 min-h-screen bg-black" style={{ fontFamily: 'var(--font-poppins), sans-serif' }}>
                 <AuthProvider>
                     <LibraryProvider>
-                        <Navbar />
-                        <main>
-                            {children}
-                        </main>
+                        <NotificationProvider>
+                            <Navbar />
+                            <main>{children}</main>
+                        </NotificationProvider>
                     </LibraryProvider>
                 </AuthProvider>
             </body>

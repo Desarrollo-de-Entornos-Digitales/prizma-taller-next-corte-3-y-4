@@ -7,6 +7,7 @@ import { useState } from 'react';
 
 import { useAuth } from '@/context/AuthContext';
 import UserAvatar from '@/common/components/UserAvatar';
+import NotificationBell from '@/common/components/NotificationBell';
 
 export default function Navbar() {
     const { isAuthenticated, user, logout } = useAuth();
@@ -71,6 +72,9 @@ export default function Navbar() {
                                 />
                             </div>
 
+                            {/* Campana de notificaciones */}
+                            <NotificationBell />
+                            
                             {/* Avatar placeholder — sidebar se agrega luego */}
                             <button
                                 onClick={() => setSidebarOpen(true)}
@@ -170,6 +174,14 @@ export default function Navbar() {
 
                         {/* Spacer */}
                         <div className="flex-1" />
+
+                        <Link
+                            href="/profile"
+                            onClick={() => setSidebarOpen(false)}
+                            className="w-full border border-[#2C2C2C] text-[#A1A1A1] text-[10px] font-bold uppercase tracking-widest py-3 rounded-[6px] hover:border-[#335bff] hover:text-white transition-all text-center block"
+                        >
+                            Ver Perfil Completo
+                        </Link>
 
                         {/* Footer con logout */}
                         <div className="px-6 py-6 shrink-0">
