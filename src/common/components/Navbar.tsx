@@ -7,6 +7,7 @@ import { useState } from 'react';
 
 import { useAuth } from '@/context/AuthContext';
 import UserAvatar from '@/common/components/UserAvatar';
+import NotificationBell from '@/common/components/NotificationBell';
 
 export default function Navbar() {
     const { isAuthenticated, user, logout } = useAuth();
@@ -71,6 +72,9 @@ export default function Navbar() {
                                 />
                             </div>
 
+                            {/* Campana de notificaciones */}
+                            <NotificationBell />
+                            
                             {/* Avatar placeholder — sidebar se agrega luego */}
                             <button
                                 onClick={() => setSidebarOpen(true)}
