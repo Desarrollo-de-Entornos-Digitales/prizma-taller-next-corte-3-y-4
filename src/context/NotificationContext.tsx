@@ -35,9 +35,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
 
     const markAsRead = async (id: string): Promise<void> => {
         await apiClient.post(`/notifications/${id}/mark-as-read`);
-        setNotifications((prev) =>
-            prev.map((n) => (n.id_notification === id ? { ...n, read: true } : n))
-        );
+        setNotifications((prev) => prev.map((n) => (n.id_notification === id ? { ...n, read: true } : n)));
     };
 
     const unreadCount = notifications.filter((n) => !n.read).length;
