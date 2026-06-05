@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Plus } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-import { getTournaments } from './services/tournament.service';
+import { getTournaments } from './services/tournaments.service';
 
 import type { Tournament } from '@/types';
 import { useAuth } from '@/context/AuthContext';
