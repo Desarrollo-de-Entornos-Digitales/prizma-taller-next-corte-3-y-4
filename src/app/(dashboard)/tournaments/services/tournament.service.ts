@@ -1,21 +1,14 @@
+import apiClient from '@/lib/axios/client';
 import type { Tournament, Registration, Announcement } from '@/types';
 
-const handleResponse = async <T>(response: Response): Promise<T> => {
-    if (!response.ok) {
-        const message = await response.text();
-        throw new Error(message || 'Network response was not ok');
-    }
-    return response.json() as Promise<T>;
-};
-
 export const getTournaments = async (): Promise<Tournament[]> => {
-    const response = await fetch('/tournaments');
-    return handleResponse<Tournament[]>(response);
+    const { data } = await apiClient.get<Tournament[]>('/tournaments');
+    return data;
 };
 
 export const getTournamentById = async (id: string): Promise<Tournament> => {
-    const response = await fetch(`/tournaments/${id}`);
-    return handleResponse<Tournament>(response);
+    const { data } = await apiClient.get<Tournament>(`/tournaments/${id}`);
+    return data;
 };
 
 export const createTournament = async (dto: {
@@ -27,29 +20,21 @@ export const createTournament = async (dto: {
     banner_url?: string;
     creator_id: string;
 }): Promise<Tournament> => {
-    const response = await fetch('/tournaments', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(dto),
-    });
-    return handleResponse<Tournament>(response);
+    const { data } = await apiClient.post<Tournament>('/tournaments', dto);
+    return data;
 };
 
 export const getAnnouncements = async (): Promise<Announcement[]> => {
-    const response = await fetch('/announcements');
-    return handleResponse<Announcement[]>(response);
+    const { data } = await apiClient.get<Announcement[]>('/announcements');
+    return data;
 };
 
 export const getRegistrations = async (): Promise<Registration[]> => {
-    const response = await fetch('/registrations');
-    return handleResponse<Registration[]>(response);
+    const { data } = await apiClient.get<Registration[]>('/registrations');
+    return data;
 };
 
 export const createRegistration = async (dto: { user_id: string; tournament_id: string }): Promise<Registration> => {
-    const response = await fetch('/registrations', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(dto),
-    });
-    return handleResponse<Registration>(response);
+    const { data } = await apiClient.post<Registration>('/registrations', dto);
+    return data;
 };
