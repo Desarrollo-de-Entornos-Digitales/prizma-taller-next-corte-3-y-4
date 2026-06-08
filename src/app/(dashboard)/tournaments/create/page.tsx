@@ -66,7 +66,7 @@ export default function CreateTournamentPage() {
                 start_date: formData.start_date,
                 rules: formData.rules,
                 banner_url: formData.banner_url || undefined,
-                creator_id: user.id_user,
+                creator_id: user.id_user ?? user.id,
             });
             router.push('/tournaments');
         } catch {

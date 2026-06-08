@@ -31,15 +31,17 @@ export default function ProfilePage() {
 
     useEffect(() => {
         if (!user) return;
+        const userId = user.id_user ?? user.id;
+        if (!userId) return;
         const fetch = async () => {
             try {
                 const [p, a, ph] = await Promise.all([
                     getPlatforms(),
                     getExternalAccounts(),
-                    getPointsHistory(user.id_user),
+                    getPointsHistory(userId),
                 ]);
                 setPlatforms(p);
-                setAccounts(a.filter((acc) => acc.user_id === user.id_user));
+                setAccounts(a.filter((acc) => acc.user_id === userId));
                 setPointsHistory(ph.slice(0, 10));
             } catch {
                 // silencioso
@@ -77,7 +79,7 @@ export default function ProfilePage() {
         <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="p-12 md:p-24 space-y-24 max-w-screen-xl mx-auto bg-black text-white min-h-screen"
+            className="p-12 md:p-24 space-y-24 max-w-7xl mx-auto bg-black text-white min-h-screen"
         >
             {/* Header de identidad */}
             <header className="flex flex-col md:flex-row gap-12 items-center md:items-start pb-16 border-b border-white/5">
@@ -119,7 +121,7 @@ export default function ProfilePage() {
                             const linked = isLinked(p.id_platform);
                             return (
                                 <div key={p.id_platform}
-                                    className="p-8 border border-[#2C2C2C] rounded-[6px] bg-[#121212]/30 flex flex-col justify-between h-44 hover:border-[#335bff] transition-colors">
+                                    className="p-8 border border-[#2C2C2C] rounded-md bg-[#121212]/30 flex flex-col justify-between h-44 hover:border-[#335bff] transition-colors">
                                     <div className="flex justify-between items-center">
                                         <h4 className="font-bold text-lg uppercase tracking-tight">{p.name}</h4>
                                         {linked ? (
@@ -159,7 +161,7 @@ export default function ProfilePage() {
                     <div className="space-y-3">
                         {pointsHistory.map((ph) => (
                             <div key={ph.id_movement}
-                                className="flex justify-between items-center p-4 border border-[#2C2C2C] rounded-[6px] bg-[#121212]/30 hover:border-neutral-700 transition-colors">
+                                className="flex justify-between items-center p-4 border border-[#2C2C2C] rounded-md bg-[#121212]/30 hover:border-neutral-700 transition-colors">
                                 <div>
                                     <p className="text-xs font-bold uppercase text-white">{ph.reason}</p>
                                     <p className="text-[9px] text-[#A1A1A1] uppercase tracking-widest">{ph.type}</p>
@@ -182,7 +184,7 @@ export default function ProfilePage() {
                     <div className="space-y-3">
                         {unreadNotifications.map((n) => (
                             <div key={n.id_notification}
-                                className="flex justify-between items-start p-4 border border-[#335bff]/30 rounded-[6px] bg-[#335bff]/5">
+                                className="flex justify-between items-start p-4 border border-[#335bff]/30 rounded-md bg-[#335bff]/5">
                                 <div className="space-y-1">
                                     <p className="text-xs font-bold uppercase text-white">{n.title}</p>
                                     <p className="text-[10px] text-[#A1A1A1]">{n.message}</p>

@@ -6,10 +6,11 @@ import type { CreateReviewDto } from '@/types';
 
 type CreateReviewFormProps = {
 	gameId: number;
+	userId: string;
 	onSubmit: (dto: CreateReviewDto) => Promise<void>;
 };
 
-export default function CreateReviewForm({ gameId, onSubmit }: CreateReviewFormProps) {
+export default function CreateReviewForm({ gameId, userId, onSubmit }: CreateReviewFormProps) {
 	const [rating, setRating] = useState(5);
 	const [content, setContent] = useState('');
 	const [loading, setLoading] = useState(false);
@@ -20,7 +21,7 @@ export default function CreateReviewForm({ gameId, onSubmit }: CreateReviewFormP
 		if (!content.trim()) return;
 		setLoading(true);
 		try {
-			await onSubmit({ content, rating, game_id: gameId });
+			await onSubmit({ content, rating, game_id: gameId, user_id: userId });
 			setContent('');
 			setRating(5);
 			setSuccess(true);
@@ -31,7 +32,7 @@ export default function CreateReviewForm({ gameId, onSubmit }: CreateReviewFormP
 	};
 
 	return (
-		<div className="p-8 border border-[#2C2C2C] bg-[#121212] rounded-[6px] space-y-6 sticky top-40">
+		<div className="p-8 border border-[#2C2C2C] bg-[#121212] rounded-md space-y-6 sticky top-40">
 			<div className="border-b border-white/5 pb-4">
 				<h3 className="text-md font-bold uppercase tracking-tight">Escribe una reseña</h3>
 				<p className="text-[9px] uppercase font-bold tracking-widest text-neutral-500 mt-1">
@@ -40,7 +41,7 @@ export default function CreateReviewForm({ gameId, onSubmit }: CreateReviewFormP
 			</div>
 
 			{success && (
-				<div className="p-4 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-[4px] text-[10px] uppercase font-bold tracking-wider flex items-center gap-2">
+				<div className="p-4 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-sm text-[10px] uppercase font-bold tracking-wider flex items-center gap-2">
 					<CheckCircle2 className="w-4 h-4" />
 					<span>¡Reseña publicada!</span>
 				</div>
@@ -51,7 +52,7 @@ export default function CreateReviewForm({ gameId, onSubmit }: CreateReviewFormP
 					<label className="text-[10px] font-bold uppercase tracking-widest text-[#A1A1A1]">
 						Calificación
 					</label>
-					<div className="flex bg-black p-3 rounded-[4px] border border-[#2C2C2C] justify-between items-center">
+					<div className="flex bg-black p-3 rounded-sm border border-[#2C2C2C] justify-between items-center">
 						<span className="text-[11px] font-mono text-neutral-400">Rating:</span>
 						<div className="flex gap-2">
 							{[1, 2, 3, 4, 5].map((s) => (
@@ -80,14 +81,14 @@ export default function CreateReviewForm({ gameId, onSubmit }: CreateReviewFormP
 						value={content}
 						onChange={(e) => setContent(e.target.value)}
 						placeholder="Escribe tu análisis del juego..."
-						className="w-full bg-black border border-[#2C2C2C] rounded-[4px] p-4 text-xs focus:outline-none focus:border-[#335bff] transition-colors resize-none placeholder-neutral-700 text-white leading-relaxed"
+						className="w-full bg-black border border-[#2C2C2C] rounded-sm p-4 text-xs focus:outline-none focus:border-[#335bff] transition-colors resize-none placeholder-neutral-700 text-white leading-relaxed"
 					/>
 				</div>
 
 				<button
 					type="submit"
 					disabled={loading}
-					className="w-full bg-white text-black text-[10px] font-bold uppercase tracking-widest py-4 rounded-[6px] hover:bg-neutral-200 transition-colors disabled:opacity-50"
+					className="w-full bg-white text-black text-[10px] font-bold uppercase tracking-widest py-4 rounded-md hover:bg-neutral-200 transition-colors disabled:opacity-50"
 				>
 					{loading ? 'Publicando...' : 'Publicar en Prizma'}
 				</button>

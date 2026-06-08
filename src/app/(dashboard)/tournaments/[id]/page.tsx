@@ -61,7 +61,7 @@ export default function TournamentDetailPage() {
         if (!user || !tournament) return;
         setRegistering(true);
         try {
-            await createRegistration({ user_id: user.id_user, tournament_id: tournament.id_tournament });
+            await createRegistration({ user_id: user.id_user ?? user.id, tournament_id: tournament.id_tournament });
             setIsRegistered(true);
         } catch {
             // silencioso

@@ -20,7 +20,14 @@ export const createTournament = async (dto: {
     banner_url?: string;
     creator_id: string;
 }): Promise<Tournament> => {
-    const { data } = await apiClient.post<Tournament>('/tournaments', dto);
+    const payload = {
+        name: dto.name,
+        start_date: dto.start_date,
+        max_participants: dto.max_slots,
+        banner_url: dto.banner_url,
+        organizer_id: dto.creator_id,
+    };
+    const { data } = await apiClient.post<Tournament>('/tournaments', payload);
     return data;
 };
 

@@ -1,26 +1,26 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
-import type { Game, Review, ReviewInteraction, CreateReviewDto } from '@/types';
+
 import { useAuth } from '@/context/AuthContext';
 import { useLibrary } from '@/context/LibraryContext';
-import {
-    getReviews,
-    createReview,
-    createReviewInteraction,
-    deleteReviewInteraction,
-} from './services/review.service';
-import ReviewList from './components/ReviewList';
-import CreateReviewForm from './components/CreateReviewForm';
 import apiClient from '@/lib/axios/client';
+import type { CreateReviewDto, Game, Review, ReviewInteraction } from '@/types';
+
+import CreateReviewForm from './components/CreateReviewForm';
+import ReviewList from './components/ReviewList';
+import { createReview, createReviewInteraction, deleteReviewInteraction, getReviews } from './services/review.service';
 
 export default function GameDetailPage() {
     const { id } = useParams<{ id: string }>();
     const router = useRouter();
     const { isAuthenticated, user } = useAuth();
     const { isInLibrary, addToLibrary } = useLibrary();
+    const normalizedUser = user as { id_user?: string; id?: string } | null;
+    const currentUserId = normalizedUser?.id_user ?? normalizedUser?.id ?? '';
 
     const [game, setGame] = useState<Game | null>(null);
     const [reviews, setReviews] = useState<Review[]>([]);
@@ -40,9 +40,7 @@ export default function GameDetailPage() {
                 setGame(gameRes.data);
                 setReviews(allReviews.filter((r) => r.game_id === Number(id)));
                 if (user) {
-                    setMyInteractions(
-                        (allInteractions as ReviewInteraction[]).filter((i) => i.user_id === user.id_user)
-                    );
+                    setMyInteractions(allInteractions.filter((i) => i.user_id === currentUserId));
                 }
             } catch {
                 // manejo silencioso
@@ -51,7 +49,7 @@ export default function GameDetailPage() {
             }
         };
         void fetchData();
-    }, [id, isAuthenticated, user]);
+    }, [id, isAuthenticated, user, currentUserId]);
 
     const handleCreateReview = async (dto: CreateReviewDto) => {
         const newReview = await createReview(dto);
@@ -104,15 +102,18 @@ export default function GameDetailPage() {
             {/* Hero Banner */}
             <section className="relative h-[70vh] w-full flex items-end border-b border-[#2C2C2C] overflow-hidden bg-black">
                 {game.banner_url && (
-                    <img
+                    <Image
                         src={game.banner_url}
                         alt={game.title}
+                        fill
+                        priority
+                        sizes="100vw"
                         className="absolute inset-0 w-full h-full object-cover"
                     />
                 )}
-                <div className="absolute inset-0 bg-gradient-to-r from-black via-black/85 to-transparent z-10" />
+                <div className="absolute inset-0 bg-linear-to-r from-black via-black/85 to-transparent z-10" />
                 <div className="relative w-full px-8 md:px-24 pb-16 z-20 max-w-2xl space-y-6">
-                    <span className="text-[10px] text-[#335bff] font-bold uppercase tracking-[0.3em] bg-[#335bff]/10 border border-[#335bff]/20 px-3 py-1.5 rounded-[4px]">
+                    <span className="text-[10px] text-[#335bff] font-bold uppercase tracking-[0.3em] bg-[#335bff]/10 border border-[#335bff]/20 px-3 py-1.5 rounded-sm">
                         {game.origin_platform}
                     </span>
                     <h1 className="text-4xl md:text-8xl font-bold tracking-tighter uppercase leading-none">
@@ -120,7 +121,9 @@ export default function GameDetailPage() {
                     </h1>
                     <div className="flex gap-8 pt-4">
                         <div className="space-y-1">
-                            <span className="text-[9px] text-[#A1A1A1] uppercase font-bold tracking-widest">Género</span>
+                            <span className="text-[9px] text-[#A1A1A1] uppercase font-bold tracking-widest">
+                                Género
+                            </span>
                             <p className="text-xs font-bold uppercase text-[#A1A1A1]">{game.genre}</p>
                         </div>
                     </div>
@@ -128,14 +131,14 @@ export default function GameDetailPage() {
                         {inLibrary ? (
                             <button
                                 disabled
-                                className="border border-[#2C2C2C] text-neutral-500 text-[10px] font-bold uppercase tracking-widest px-8 py-4 rounded-[6px] opacity-60 cursor-not-allowed"
+                                className="border border-[#2C2C2C] text-neutral-500 text-[10px] font-bold uppercase tracking-widest px-8 py-4 rounded-md opacity-60 cursor-not-allowed"
                             >
                                 Ya en biblioteca
                             </button>
                         ) : (
                             <button
                                 onClick={() => void addToLibrary(gameId)}
-                                className="bg-white text-black text-[10px] font-bold uppercase tracking-widest px-8 py-4 rounded-[6px] hover:bg-neutral-200 transition-all"
+                                className="bg-white text-black text-[10px] font-bold uppercase tracking-widest px-8 py-4 rounded-md hover:bg-neutral-200 transition-all"
                             >
                                 Agregar a Biblioteca
                             </button>
@@ -157,7 +160,7 @@ export default function GameDetailPage() {
                 </div>
                 {isAuthenticated && (
                     <div className="xl:col-span-5">
-                        <CreateReviewForm gameId={gameId} onSubmit={handleCreateReview} />
+                        <CreateReviewForm gameId={gameId} userId={user?.id_user ?? user?.id ?? ''} onSubmit={handleCreateReview} />
                     </div>
                 )}
             </div>

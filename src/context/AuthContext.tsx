@@ -29,7 +29,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             }
             if (storedUser) {
                 try {
-                    setUser(JSON.parse(storedUser) as User);
+                    const parsed = JSON.parse(storedUser) as User;
+                    const normalized = { ...parsed, id_user: parsed.id_user ?? parsed.id };
+                    setUser(normalized);
                 } catch {
                     localStorage.removeItem('user');
                 }
@@ -39,10 +41,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }, []);
 
     const login = (newToken: string, newUser: User): void => {
+        const normalized = { ...newUser, id_user: newUser.id_user ?? newUser.id };
         localStorage.setItem('token', newToken);
-        localStorage.setItem('user', JSON.stringify(newUser));
+        localStorage.setItem('user', JSON.stringify(normalized));
         setToken(newToken);
-        setUser(newUser);
+        setUser(normalized);
     };
 
     const logout = (): void => {

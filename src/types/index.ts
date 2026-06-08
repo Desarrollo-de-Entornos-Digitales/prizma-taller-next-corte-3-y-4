@@ -18,12 +18,14 @@ export type CreateUserDto = {
 };
 
 export type User = {
-    id_user: string;
+    id: string;
+    id_user?: string;
     name: string;
     email: string;
     total_points: number;
     account_status: string;
     role_id: number;
+    avatar_url?: string | null;
 };
 
 // ─── Games ────────────────────────────────────────────────────────────────────
@@ -62,6 +64,7 @@ export type CreateReviewDto = {
     content: string;
     rating: number;
     game_id: number;
+    user_id?: string;
 };
 
 export type UpdateReviewDto = {
