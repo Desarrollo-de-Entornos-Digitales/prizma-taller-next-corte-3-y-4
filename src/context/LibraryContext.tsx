@@ -45,7 +45,7 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
 
     const addToLibrary = async (gameId: number): Promise<void> => {
         if (!user) return;
-        await apiClient.post('/user-libraries', { game_id: gameId, user_id: user.id_user });
+        await apiClient.post('/user-libraries', { game_id: gameId });
         await fetchLibrary();
     };
 
