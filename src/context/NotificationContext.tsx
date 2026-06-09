@@ -22,8 +22,8 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     const fetchNotifications = async () => {
         if (!isAuthenticated || !user) return;
         try {
-            const { data } = await apiClient.get<Notification[]>(`/notifications/user/${user.id_user}`);
-            setNotifications(data);
+            const { data } = await apiClient.get<Notification[]>(`/notifications/user/${user.id_user ?? user.id}`);
+            setNotifications(Array.isArray(data) ? data : []);
         } catch {
             setNotifications([]);
         }

@@ -27,7 +27,8 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
         setLoading(true);
         try {
             const { data } = await apiClient.get<UserLibrary[]>('/user-libraries');
-            const mine = data.filter((entry) => entry.user_id === user.id_user);
+            const list = Array.isArray(data) ? data : [];
+            const mine = list.filter((entry) => entry.user_id === (user.id_user ?? user.id));
             setLibrary(mine);
         } catch {
             setLibrary([]);
