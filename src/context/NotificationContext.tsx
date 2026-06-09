@@ -23,7 +23,12 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
         if (!isAuthenticated || !user) return;
         try {
             const { data } = await apiClient.get<Notification[]>(`/notifications/user/${user.id_user ?? user.id}`);
-            setNotifications(Array.isArray(data) ? data : []);
+            const list = Array.isArray(data) ? data : [];
+            const normalized = list.map((n) => ({
+                ...n,
+                id_notification: n.id_notification ?? (n as unknown as { id: string }).id,
+            }));
+            setNotifications(normalized);
         } catch {
             setNotifications([]);
         }

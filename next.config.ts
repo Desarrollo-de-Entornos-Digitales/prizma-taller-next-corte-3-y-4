@@ -4,11 +4,7 @@ const nextConfig = {
         remotePatterns: [
             {
                 protocol: 'https',
-                hostname: 'cdn.cloudflare.steamstatic.com',
-            },
-            {
-                protocol: 'https',
-                hostname: 'store.steampowered.com',
+                hostname: '**',
             },
         ],
     },
