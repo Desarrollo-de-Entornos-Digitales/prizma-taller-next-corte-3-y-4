@@ -120,7 +120,7 @@ export default function TournamentsPage() {
                     <div className="grid md:grid-cols-2 gap-8">
                         {filtered.map((t) => (
                             <TournamentCard
-                                key={t.id_tournament}
+                                key={t.id_tournament ?? (t as unknown as { id: string }).id}
                                 tournament={t}
                                 onClick={(id) => router.push(`/tournaments/${id}`)}
                             />

@@ -22,7 +22,7 @@ const statusLabels: Record<string, string> = {
 export default function TournamentCard({ tournament, onClick }: TournamentCardProps) {
     return (
         <div
-            onClick={() => onClick(tournament.id_tournament)}
+            onClick={() => onClick(tournament.id_tournament ?? (tournament as unknown as { id: string }).id)}
             className="overflow-hidden relative flex flex-col justify-between h-80 border border-[#2C2C2C] hover:border-[#335bff] hover:scale-[1.02] transition-all duration-500 bg-black rounded-[6px] cursor-pointer group"
         >
             {tournament.banner_url && (
