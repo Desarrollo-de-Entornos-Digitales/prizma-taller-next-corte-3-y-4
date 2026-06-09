@@ -48,7 +48,7 @@ export default function ReviewList({ reviews, interactions, onVote }: ReviewList
 										{review.user?.name ?? 'Usuario'}
 									</p>
 									<p className="text-[8px] font-mono text-neutral-500 uppercase tracking-widest">
-										{new Date(review.published_at).toLocaleDateString()}
+										{new Date(review.published_at ?? (review as unknown as { created_at: string }).created_at).toLocaleDateString()}
 									</p>
 								</div>
 							</div>

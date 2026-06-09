@@ -7,13 +7,13 @@ export const updateUser = async (id: string, dto: { name?: string }): Promise<Us
 };
 
 export const getPlatforms = async (): Promise<Platform[]> => {
-    const { data } = await apiClient.get<Platform[]>('/platforms');
-    return data;
+    const { data } = await apiClient.get('/platforms');
+    return Array.isArray(data) ? data : [];
 };
 
 export const getExternalAccounts = async (): Promise<ExternalAccount[]> => {
-    const { data } = await apiClient.get<ExternalAccount[]>('/external-accounts');
-    return data;
+    const { data } = await apiClient.get('/external-accounts');
+    return Array.isArray(data) ? data : [];
 };
 
 export const linkExternalAccount = async (dto: {
@@ -34,6 +34,6 @@ export const unlinkExternalAccount = async (id: string): Promise<void> => {
 };
 
 export const getPointsHistory = async (userId: string): Promise<PointsHistory[]> => {
-    const { data } = await apiClient.get<PointsHistory[]>(`/points-history/user/${userId}`);
-    return data;
+    const { data } = await apiClient.get(`/points-history/user/${userId}`);
+    return Array.isArray(data) ? data : [];
 };

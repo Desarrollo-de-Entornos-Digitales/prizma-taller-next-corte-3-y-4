@@ -24,8 +24,9 @@ export const createTournament = async (dto: {
         name: dto.name,
         start_date: dto.start_date,
         max_participants: dto.max_slots,
-        banner_url: dto.banner_url,
+        banner_url: dto.banner_url || undefined,
         organizer_id: dto.creator_id,
+        creator_id: dto.creator_id,
     };
     const { data } = await apiClient.post<Tournament>('/tournaments', payload);
     return data;
