@@ -59,10 +59,13 @@ export default function LibraryPage() {
                         if (!entry.game) return null;
                         return (
                             <GameCard
-                                key={entry.id_library}
-                                game={entry.game}
-                                onClick={(id) => router.push(`/games/${id}`)}
-                            />
+                            key={entry.id_library}
+                            game={entry.game}
+                            onClick={(id) => {
+                                const gameId = id ?? entry.game?.id_game ?? entry.game_id;
+                                if (gameId) router.push(`/games/${gameId}`);
+                            }}
+                        />
                         );
                     })}
                 </div>
