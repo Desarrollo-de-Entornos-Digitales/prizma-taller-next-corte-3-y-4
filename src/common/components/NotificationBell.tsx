@@ -63,8 +63,8 @@ export default function NotificationBell() {
                                     <p className="text-[10px] font-bold text-neutral-600 uppercase tracking-widest">Sin alertas nuevas</p>
                                 </div>
                             ) : (
-                                notifications.map((notif) => (
-                                    <div key={notif.id_notification}
+                                notifications.map((notif, index) => (
+                                    <div key={notif.id_notification ?? index}
                                         className={`p-5 flex flex-col gap-1 transition-colors hover:bg-neutral-900/40 relative ${!notif.read ? 'bg-neutral-950/20' : ''}`}>
                                         {!notif.read && (
                                             <span className="absolute left-2.5 top-6 w-1.5 h-1.5 bg-[#335bff] rounded-full" />
