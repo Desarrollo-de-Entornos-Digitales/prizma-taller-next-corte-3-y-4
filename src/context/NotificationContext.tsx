@@ -43,7 +43,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
         if (!userId) return;
         try {
             const { data } = await apiClient.get<RawNotification[]>(`/notifications/user/${userId}`);
-            const list = Array.isArray(data) ? data : [];
+            const list = Array.isArray(data) ? data : (data as { data?: RawNotification[] }).data ?? [];
             const normalized: Notification[] = list.map((n) => ({
                 ...n,
                 id_notification: n.id_notification ?? n.id ?? '',
