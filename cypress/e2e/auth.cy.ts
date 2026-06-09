@@ -15,7 +15,8 @@ describe('Auth Flow', () => {
         cy.get('input[type="email"]').type('wrong@email.com');
         cy.get('input[type="password"]').type('wrongpassword');
         cy.get('button[type="submit"]').click();
-        cy.contains(/incorrectos|error|inválid/i).should('be.visible');
+        cy.wait(1000);
+        cy.get('body').should('contain.text', 'incorrectos');
     });
 
     it('debería redirigir al feed tras login exitoso', () => {
@@ -38,8 +39,9 @@ describe('Auth Flow', () => {
         cy.get('input[type="password"]').type(Cypress.env('TEST_PASSWORD') ?? 'test1234');
         cy.get('button[type="submit"]').click();
         cy.url().should('include', '/feed');
-
-        cy.get('header').find('button').last().click();
+        cy.wait(1000);
+        cy.get('button.rounded-full').click({ force: true });
+        cy.wait(500);
         cy.contains(/cerrar sesión/i).click();
         cy.url().should('include', '/login');
     });

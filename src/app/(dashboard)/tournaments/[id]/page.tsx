@@ -7,6 +7,8 @@ import { ArrowLeft, Check, Bell, Shield, Ghost } from 'lucide-react';
 
 import type { Tournament, Announcement, Registration } from '@/types';
 import { useAuth } from '@/context/AuthContext';
+import apiClient from '@/lib/axios/client';
+import { useNotifications } from '@/context/NotificationContext';
 
 import {
     getTournamentById,
@@ -30,6 +32,7 @@ export default function TournamentDetailPage() {
     const [isRegistered, setIsRegistered] = useState(false);
     const [loading, setLoading] = useState(true);
     const [registering, setRegistering] = useState(false);
+    const { refresh: refreshNotifications } = useNotifications();
 
     useEffect(() => {
         const fetch = async () => {
@@ -61,9 +64,17 @@ export default function TournamentDetailPage() {
         if (!user || !tournament) return;
         setRegistering(true);
         try {
+            const userId = user.id_user ?? user.id;
             const tournamentId = tournament.id_tournament ?? (tournament as unknown as { id: string }).id;
-            await createRegistration({ user_id: user.id_user ?? user.id, tournament_id: tournamentId });
+            await createRegistration({ user_id: userId, tournament_id: tournamentId });
+            await apiClient.post('/notifications', {
+                title: '¡Inscripción confirmada!',
+                message: `Te has inscrito exitosamente al torneo "${tournament.name}".`,
+                type: 'tournament',
+                user_id: userId,
+            });
             setIsRegistered(true);
+            void refreshNotifications();
         } catch {
             // silencioso
         } finally {
