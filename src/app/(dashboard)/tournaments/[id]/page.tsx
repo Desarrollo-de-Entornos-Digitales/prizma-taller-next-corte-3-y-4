@@ -74,7 +74,7 @@ export default function TournamentDetailPage() {
                 user_id: userId,
             });
             setIsRegistered(true);
-            void refreshNotifications();
+            await refreshNotifications();
         } catch {
             // silencioso
         } finally {

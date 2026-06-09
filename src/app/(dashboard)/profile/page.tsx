@@ -3,25 +3,19 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { Link as LinkIcon, CheckCircle2 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { useNotifications } from '@/context/NotificationContext';
-import type { ExternalAccount, Platform, PointsHistory } from '@/types';
-import {
-    getPlatforms,
-    getExternalAccounts,
-    linkExternalAccount,
-    unlinkExternalAccount,
-    getPointsHistory,
-} from './services/profile.service';
+import { useLibrary } from '@/context/LibraryContext';
+import GameCard from '@/common/components/GameCard';
+import type { PointsHistory } from '@/types';
+import { getPointsHistory } from './services/profile.service';
 
 export default function ProfilePage() {
     const { user, isAuthenticated, isLoading } = useAuth();
     const { notifications, markAsRead } = useNotifications();
+    const { library } = useLibrary();
     const router = useRouter();
 
-    const [platforms, setPlatforms] = useState<Platform[]>([]);
-    const [accounts, setAccounts] = useState<ExternalAccount[]>([]);
     const [pointsHistory, setPointsHistory] = useState<PointsHistory[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -35,13 +29,7 @@ export default function ProfilePage() {
         if (!userId) return;
         const fetch = async () => {
             try {
-                const [p, a, ph] = await Promise.all([
-                    getPlatforms(),
-                    getExternalAccounts(),
-                    getPointsHistory(userId),
-                ]);
-                setPlatforms(p);
-                setAccounts(a.filter((acc) => acc.user_id === userId));
+                const ph = await getPointsHistory(userId);
                 setPointsHistory(ph.slice(0, 10));
             } catch {
                 // silencioso
@@ -51,19 +39,6 @@ export default function ProfilePage() {
         };
         void fetch();
     }, [user]);
-
-    const isLinked = (platformId: string) =>
-        accounts.some((a) => a.platform_id === platformId);
-
-    const getAccount = (platformId: string) =>
-        accounts.find((a) => a.platform_id === platformId);
-
-    const handleUnlink = async (platformId: string) => {
-        const account = getAccount(platformId);
-        if (!account) return;
-        await unlinkExternalAccount(account.id_external_account);
-        setAccounts((prev) => prev.filter((a) => a.id_external_account !== account.id_external_account));
-    };
 
     if (isLoading || loading) {
         return (
@@ -108,41 +83,31 @@ export default function ProfilePage() {
                 </div>
             </header>
 
-            {/* Plataformas externas */}
+            {/* Biblioteca del usuario */}
             <section className="space-y-10">
                 <h3 className="text-[10px] font-bold text-[#A1A1A1] uppercase tracking-[0.3em] pb-4 border-b border-white/5">
-                    Sincronización de Plataformas
+                    Mi Biblioteca ({library.length} {library.length === 1 ? 'juego' : 'juegos'})
                 </h3>
-                {platforms.length === 0 ? (
-                    <p className="text-[#A1A1A1] text-[10px] uppercase tracking-widest">No hay plataformas disponibles</p>
+                {library.length === 0 ? (
+                    <div className="py-12 border border-dashed border-[#2C2C2C] rounded-[6px] flex flex-col items-center justify-center space-y-3">
+                        <p className="text-[#A1A1A1] text-[10px] uppercase tracking-widest font-bold">Tu biblioteca está vacía</p>
+                        <button
+                            onClick={() => router.push('/feed')}
+                            className="text-[9px] font-bold uppercase tracking-widest text-[#335bff] hover:underline"
+                        >
+                            Explorar juegos
+                        </button>
+                    </div>
                 ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {platforms.map((p) => {
-                            const linked = isLinked(p.id_platform);
+                    <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide">
+                        {library.map((entry) => {
+                            if (!entry.game) return null;
                             return (
-                                <div key={p.id_platform}
-                                    className="p-8 border border-[#2C2C2C] rounded-md bg-[#121212]/30 flex flex-col justify-between h-44 hover:border-[#335bff] transition-colors">
-                                    <div className="flex justify-between items-center">
-                                        <h4 className="font-bold text-lg uppercase tracking-tight">{p.name}</h4>
-                                        {linked ? (
-                                            <span className="text-emerald-400 flex items-center gap-1 text-[8px] uppercase font-bold tracking-widest bg-emerald-500/5 px-2 py-1 border border-emerald-500/20 rounded">
-                                                <CheckCircle2 className="w-3 h-3" /> Activo
-                                            </span>
-                                        ) : (
-                                            <span className="text-[#A1A1A1] text-[8px] uppercase font-bold tracking-widest bg-white/5 px-2 py-1 rounded">
-                                                Desconectado
-                                            </span>
-                                        )}
-                                    </div>
-                                    <p className="text-[#A1A1A1] text-[10px] line-clamp-2">{p.description}</p>
-                                    <button
-                                        type="button"
-                                        onClick={() => linked ? void handleUnlink(p.id_platform) : undefined}
-                                        className="text-[9px] font-bold uppercase tracking-widest text-[#335bff] hover:underline flex items-center gap-1"
-                                    >
-                                        <LinkIcon className="w-3 h-3" />
-                                        {linked ? 'Desvincular' : 'Vincular'}
-                                    </button>
+                                <div key={entry.id_library} className="shrink-0 w-64">
+                                    <GameCard
+                                        game={entry.game}
+                                        onClick={(id) => router.push(`/games/${id ?? entry.game_id}`)}
+                                    />
                                 </div>
                             );
                         })}
